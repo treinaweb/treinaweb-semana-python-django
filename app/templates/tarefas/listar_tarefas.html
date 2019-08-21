@@ -1,31 +1,21 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}">
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Gerenciador de tarefas - TreinaWeb</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'listar_tarefas' %}">Listar Tarefas</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-<main class="container">
+{% extends 'base.html' %}
 
+{% block conteudo %}
 <h1>Listagem de tarefas</h1>
+{% for tarefa in tarefas %}
+<div class="card mb-3">
+    <div class="card-header">
+        {{ tarefa.get_prioridade_display }}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{tarefa.titulo}}</h5>
+        <p class="card-text">{{tarefa.descricao}}</p>
+        <hr>
+        <a href="{% url 'editar_tarefa' tarefa.id %}">Alterar tarefa</a>
+        <a href="{% url 'remover_tarefa' tarefa.id %}">Remover tarefa</a>
+    </div>
+</div>
+{% endfor %}
+<a href="{% url 'cadastrar_tarefa' %}"><input type="button" class="btn btn-primary mb-3" value="Cadastrar Tarefa"></a>
+{% endblock conteudo %}
 
-<h2>{{ nome_tarefa }}</h2>
-
-</main>
-</body>
-</html>
